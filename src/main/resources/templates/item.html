@@ -25,9 +25,7 @@
     <tr th:each="item : ${items}">
       <td th:text="${item.name}"></td>
       <td th:text="${item.remaining}"></td>
-      <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <td><a class="btn btn-success" th:href="@{|/item/${item.id}/borrowers|}">Borrowers</a></td>
-      </div>
+      <td><a class="btn btn-success" th:href="@{|/item/${item.id}/borrowers|}">Borrowers</a></td>
       <div th:if="${!item.isBorrowedByMember}">
         <td>
           <form th:action="@{|/item/${item.id}/borrow/|}" method="POST">
