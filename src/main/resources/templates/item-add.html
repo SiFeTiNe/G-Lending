@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>G-Lending Website</title>
+  <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+  <h1 class="display-6">Add Item</h1>
+
+  <form th:action="@{/item/add}" method="POST">
+    <div class="mb-3">
+      <label for="nameInput" class="form-label">Name</label>
+      <input id="nameInput" type="text" class="form-control" name="name">
+    </div>
+    <div class="mb-3">
+      <label for="remainingInput" class="form-label">Remaining</label>
+      <input id="remainingInput" type="text" class="form-control" name="remaining">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+</body>
+</html>
