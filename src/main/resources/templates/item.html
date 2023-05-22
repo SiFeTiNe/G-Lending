@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
   <title>Items</title>
@@ -24,6 +25,9 @@
     <tr th:each="item : ${items}">
       <td th:text="${item.name}"></td>
       <td th:text="${item.remaining}"></td>
+      <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <td><button type="submit" class="btn btn-primary">Borrowers</button></td>
+      </div>
     </tr>
     </tbody>
   </table>

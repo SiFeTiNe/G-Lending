@@ -3,11 +3,10 @@ package com.gable.glending.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -25,5 +24,12 @@ public class Member {
     private String lastName;
     private String email;
     private String role;
+    @ManyToMany
+    @JoinTable(
+            name = "borrowing_items",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    private List<Item> borrowingItems = new ArrayList<>();
     private Instant createdAt;
 }
