@@ -1,8 +1,8 @@
 package com.gable.glending.controller;
 
 
-import com.gable.glending.model.Item;
-import com.gable.glending.repository.ItemRepository;
+import com.gable.glending.dto.ItemDto;
+import com.gable.glending.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ItemController {
 
     @Autowired
-    private ItemRepository repository;
+    private ItemService itemService;
 
     @GetMapping("/item")
     public String getItemPage(Model model) {
-        model.addAttribute("items", repository.findAll());
+        model.addAttribute("items", itemService.getItems());
         return "item";  // return item.html
     }
 
@@ -28,9 +28,9 @@ public class ItemController {
     }
 
     @PostMapping("/item/add")
-    public String addItem(@ModelAttribute Item item,
+    public String addItem(@ModelAttribute ItemDto item,
                                 Model model) {
-        repository.save(item);
+        itemService.create(item);
         return "redirect:/item";
     }
 

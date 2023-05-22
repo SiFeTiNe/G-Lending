@@ -1,5 +1,6 @@
 package com.gable.glending.controller;
 
+import com.gable.glending.dto.SignupDto;
 import com.gable.glending.model.Member;
 import com.gable.glending.service.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public String signupMember(@ModelAttribute Member member, Model model) {
+    public String signupMember(@ModelAttribute SignupDto member, Model model) {
 
         String signupError = null;
 
