@@ -4,8 +4,10 @@ import com.gable.glending.dto.ItemDto;
 import com.gable.glending.model.Item;
 import com.gable.glending.model.Member;
 import com.gable.glending.repository.ItemRepository;
+import com.gable.glending.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -18,14 +20,17 @@ import java.util.stream.Collectors;
 public class ItemService {
 
     @Autowired
-    private ItemRepository repository;
+    private ItemRepository itemRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     //   ----> we are mapping DAO → DTO
     public List<ItemDto> getItems() {
-        List<Item> items = repository.findAll();
+        List<Item> items = itemRepository.findAll();
 
         List<ItemDto> dtos = items
                 .stream()
@@ -40,14 +45,15 @@ public class ItemService {
     public void create(ItemDto itemDto) {
         Item item = modelMapper.map(itemDto, Item.class);
         item.setCreatedAt(Instant.now());
-        repository.save(item);
+        itemRepository.save(item);
     }
 
-    public void borrow(Member member, UUID itemId) {
-        System.out.println(itemId);
-        Optional<Item> item = repository.findById(itemId);
+    public void borrow(Authentication auth, UUID itemId) {
+        Optional<Item> item = itemRepository.findById(itemId);
         if (item.isPresent()) {
-            System.out.println(item.get().getId());
+            Member member = memberRepository.findByUsername(auth.getName());
+            member.borrowItem(item.get());
+            memberRepository.save(member);
         }
 
         // System.out.println(member.getUsername());

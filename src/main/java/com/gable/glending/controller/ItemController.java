@@ -42,9 +42,9 @@ public class ItemController {
     }
 
     @PostMapping("/item/borrow/{id}")
-    public String borrowItem(@PathVariable(name = "id") UUID id, @AuthenticationPrincipal final Member member,
+    public String borrowItem(@PathVariable(name = "id") UUID id, Authentication auth,
                              Model model) {
-        itemService.borrow(member, id);
+        itemService.borrow(auth, id);
         return "redirect:/item";
     }
 
