@@ -35,10 +35,16 @@ public class Member {
     private Instant createdAt;
 
     public void borrowItem(Item item) {
-        borrowingItems.add(item);
+        if (!borrowingItems.contains(item) && item.getRemaining() >= 1) {
+            borrowingItems.add(item);
+            item.setRemaining(item.getRemaining() - 1);
+        }
     }
 
     public void returnItem(Item item) {
-        borrowingItems.remove(item);
+        if (borrowingItems.contains(item)) {
+            borrowingItems.remove(item);
+            item.setRemaining(item.getRemaining() + 1);
+        }
     }
 }

@@ -48,7 +48,7 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public void borrow(Authentication auth, UUID itemId) {
+    public void borrowItem(Authentication auth, UUID itemId) {
         Optional<Item> item = itemRepository.findById(itemId);
         if (item.isPresent()) {
             Member member = memberRepository.findByUsername(auth.getName());
@@ -57,5 +57,14 @@ public class ItemService {
         }
 
         // System.out.println(member.getUsername());
+    }
+
+    public void returnItem(Authentication auth, UUID itemId) {
+        Optional<Item> item = itemRepository.findById(itemId);
+        if (item.isPresent()) {
+            Member member = memberRepository.findByUsername(auth.getName());
+            member.returnItem(item.get());
+            memberRepository.save(member);
+        }
     }
 }

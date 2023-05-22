@@ -32,7 +32,12 @@
       </div>
       <td>
         <form th:action="@{|/item/borrow/${item.id}|}" method="POST">
-          <button type="submit" class="btn btn-primary">Borrow</button>
+          <button type="submit" class="btn btn-success">Borrow</button>
+        </form>
+      </td>
+      <td>
+        <form th:action="@{|/item/return/${item.id}|}" method="POST">
+          <button type="submit" class="btn btn-danger">Return</button>
         </form>
       </td>
     </tr>
