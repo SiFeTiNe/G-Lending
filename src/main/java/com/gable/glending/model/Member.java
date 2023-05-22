@@ -16,6 +16,7 @@ public class Member {
 
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     private String username;
@@ -32,4 +33,12 @@ public class Member {
     )
     private List<Item> borrowingItems = new ArrayList<>();
     private Instant createdAt;
+
+    public void borrowItem(Item item) {
+        borrowingItems.add(item);
+    }
+
+    public void returnItem(Item item) {
+        borrowingItems.remove(item);
+    }
 }

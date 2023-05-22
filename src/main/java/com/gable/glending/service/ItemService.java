@@ -2,6 +2,7 @@ package com.gable.glending.service;
 
 import com.gable.glending.dto.ItemDto;
 import com.gable.glending.model.Item;
+import com.gable.glending.model.Member;
 import com.gable.glending.repository.ItemRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,5 +41,15 @@ public class ItemService {
         Item item = modelMapper.map(itemDto, Item.class);
         item.setCreatedAt(Instant.now());
         repository.save(item);
+    }
+
+    public void borrow(Member member, UUID itemId) {
+        System.out.println(itemId);
+        Optional<Item> item = repository.findById(itemId);
+        if (item.isPresent()) {
+            System.out.println(item.get().getId());
+        }
+
+        // System.out.println(member.getUsername());
     }
 }
