@@ -28,6 +28,10 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/home", "/signup",
                         "/css/**", "/js/**").permitAll()
+                .antMatchers("/item/add")
+                .access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/item", "/review", "/review/**")
+                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
 
                 .and()
