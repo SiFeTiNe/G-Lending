@@ -90,4 +90,25 @@ public class ItemService {
         }
         return null;
     }
+
+    public List<ItemDto> getItemsByUsername(Authentication auth, String username) {
+        Member member = memberRepository.findByUsername(username);
+
+        List<Item> items = member.getBorrowingItems();
+
+        List<ItemDto> dtos = items
+                .stream()
+                .map(item -> modelMapper.map(item, ItemDto.class))
+                .collect(Collectors.toList());
+
+
+        Member authMember = memberRepository.findByUsername(auth.getName());
+        for(ItemDto dto : dtos) {
+            if (dto.getBorrowers().contains(authMember)) {
+                dto.setBorrowedByMember(true);
+            }
+        }
+
+        return dtos;
+    }
 }

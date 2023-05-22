@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Items</title>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<div th:insert="fragments/header :: header"></div>
+
+<div class="container">
+    <h1 class="display-6">Borrowing from Member: <span th:text="${username}">Username</span></h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Remaining</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.remaining}"></td>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <td><a class="btn btn-success" th:href="@{|/item/${item.id}/borrowers|}">Borrowers</a></td>
+            </div>
+            <div th:if="${!item.isBorrowedByMember}">
+                <td>
+                    <form th:action="@{|/item/${item.id}/borrow/|}" method="POST">
+                        <button type="submit" class="btn btn-success">Borrow</button>
+                    </form>
+                </td>
+            </div>
+            <div th:if="${item.isBorrowedByMember}">
+                <td>
+                    <form th:action="@{|/item/${item.id}/return/|}" method="POST">
+                        <button type="submit" class="btn btn-danger">Return</button>
+                    </form>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

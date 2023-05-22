@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <title>Items</title>
+  <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<div th:insert="fragments/header :: header"></div>
+
+<div class="container">
+  <h1 class="display-6">Members</span></h1>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${members}">
+      <td th:text="${member.username}"></td>
+      <td th:text="${member.firstName}"></td>
+      <td th:text="${member.lastName}"></td>
+      <td th:text="${member.email}"></td>
+      <td th:text="${member.role}"></td>
+      <td><a class="btn btn-success" th:href="@{|/item/${member.username}/borrowing|}">Borrowing</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

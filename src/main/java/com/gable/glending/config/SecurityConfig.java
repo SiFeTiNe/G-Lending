@@ -31,7 +31,7 @@ public class SecurityConfig {
                         "/css/**", "/js/**").permitAll()
                 .antMatchers("/item/add", "/item/*/borrowers") // included "/item/add"
                 .access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/item", "/review", "/review/**")
+                .antMatchers("/item", "/item/*/borrowing", "/member")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
 

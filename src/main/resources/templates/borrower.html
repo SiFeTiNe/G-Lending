@@ -12,7 +12,7 @@
 <div th:insert="fragments/header :: header"></div>
 
 <div class="container">
-    <h1 class="display-6">Borrowers for <span th:text="${item.name}">Item Name</span></h1>
+    <h1 class="display-6">Borrowers for Item: <span th:text="${item.name}">Item Name</span></h1>
 
     <table class="table table-striped">
         <thead>
@@ -31,6 +31,7 @@
             <td th:text="${borrower.lastName}"></td>
             <td th:text="${borrower.email}"></td>
             <td th:text="${borrower.role}"></td>
+            <td><a class="btn btn-success" th:href="@{|/item/${borrower.username}/borrowing|}">Borrowing</a></td>
         </tr>
         </tbody>
     </table>
