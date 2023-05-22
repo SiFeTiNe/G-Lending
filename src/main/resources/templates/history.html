@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <title>Items</title>
+  <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<div th:insert="fragments/header :: header"></div>
+
+<div class="container">
+  <h1 class="display-6">Your History</h1>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Item</th>
+      <th>Action</th>
+      <th>Timestamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="history : ${histories}">
+      <td th:text="${history.item.name}"></td>
+      <td th:text="${history.action}"></td>
+      <td th:text="${history.timestamp}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

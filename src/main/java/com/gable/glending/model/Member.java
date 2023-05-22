@@ -32,12 +32,22 @@ public class Member {
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
     private List<Item> borrowingItems = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BorrowReturnHistory> borrowReturnHistories = new ArrayList<>();
     private Instant createdAt;
 
     public void borrowItem(Item item) {
         if (!borrowingItems.contains(item) && item.getRemaining() >= 1) {
             borrowingItems.add(item);
             item.setRemaining(item.getRemaining() - 1);
+
+            BorrowReturnHistory history = new BorrowReturnHistory();
+            history.setMember(this);
+            history.setItem(item);
+            history.setAction(ActionType.BORROW);
+            history.setTimestamp(Instant.now());
+
+            borrowReturnHistories.add(history);
         }
     }
 
@@ -45,6 +55,14 @@ public class Member {
         if (borrowingItems.contains(item)) {
             borrowingItems.remove(item);
             item.setRemaining(item.getRemaining() + 1);
+
+            BorrowReturnHistory history = new BorrowReturnHistory();
+            history.setMember(this);
+            history.setItem(item);
+            history.setAction(ActionType.RETURN);
+            history.setTimestamp(Instant.now());
+
+            borrowReturnHistories.add(history);
         }
     }
 }

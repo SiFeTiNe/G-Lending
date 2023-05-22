@@ -34,6 +34,16 @@
                         <a class="nav-link" th:href="@{/member}">Member</a>
                     </li>
                 </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/history}">History</a>
+                    </li>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/history/all}">All Histories</a>
+                    </li>
+                </div>
             </ul>
 
             <div sec:authorize="isAuthenticated()">

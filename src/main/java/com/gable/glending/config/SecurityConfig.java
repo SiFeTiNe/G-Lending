@@ -29,9 +29,9 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/home", "/signup",
                         "/css/**", "/js/**").permitAll()
-                .antMatchers("/item/add") // included "/item/add"
+                .antMatchers("/item/add", "/history/all") // included "/item/add"
                 .access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/item", "/item/*/borrowers", "/item/*/borrowing", "/member")
+                .antMatchers("/item", "/item/*/borrowers", "/item/*/borrowing", "/member", "/history")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
 
