@@ -74,4 +74,20 @@ public class ItemService {
             memberRepository.save(member);
         }
     }
+
+    public List<Member> getBorrowers(UUID itemId) {
+        Optional<Item> item = itemRepository.findById(itemId);
+        if (item.isPresent()) {
+            return item.get().getBorrowers();
+        }
+        return List.of();
+    }
+
+    public ItemDto getItemDtoById(UUID itemId) {
+        Optional<Item> item = itemRepository.findById(itemId);
+        if (item.isPresent()) {
+            return modelMapper.map(item.get(), ItemDto.class);
+        }
+        return null;
+    }
 }

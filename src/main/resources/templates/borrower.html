@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Items</title>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<div th:insert="fragments/header :: header"></div>
+
+<div class="container">
+    <h1 class="display-6">Borrowers for <span th:text="${item.name}">Item Name</span></h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="borrower : ${borrowers}">
+            <td th:text="${borrower.username}"></td>
+            <td th:text="${borrower.firstName}"></td>
+            <td th:text="${borrower.lastName}"></td>
+            <td th:text="${borrower.email}"></td>
+            <td th:text="${borrower.role}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

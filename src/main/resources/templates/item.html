@@ -17,29 +17,27 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Remaining</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="item : ${items}">
-      <td th:text="${item.id}"></td>
       <td th:text="${item.name}"></td>
       <td th:text="${item.remaining}"></td>
       <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <td><button type="submit" class="btn btn-primary">Borrowers</button></td>
+        <td><a class="btn btn-success" th:href="@{|/item/${item.id}/borrowers|}">Borrowers</a></td>
       </div>
       <div th:if="${!item.isBorrowedByMember}">
         <td>
-          <form th:action="@{|/item/borrow/${item.id}|}" method="POST">
+          <form th:action="@{|/item/${item.id}/borrow/|}" method="POST">
             <button type="submit" class="btn btn-success">Borrow</button>
           </form>
         </td>
       </div>
       <div th:if="${item.isBorrowedByMember}">
         <td>
-          <form th:action="@{|/item/return/${item.id}|}" method="POST">
+          <form th:action="@{|/item/${item.id}/return/|}" method="POST">
             <button type="submit" class="btn btn-danger">Return</button>
           </form>
         </td>

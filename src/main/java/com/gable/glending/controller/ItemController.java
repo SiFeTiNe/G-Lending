@@ -41,18 +41,24 @@ public class ItemController {
         return "redirect:/item";
     }
 
-    @PostMapping("/item/borrow/{id}")
-    public String borrowItem(@PathVariable(name = "id") UUID id, Authentication auth,
+    @PostMapping("/item/{id}/borrow")
+    public String borrowItemById(@PathVariable(name = "id") UUID id, Authentication auth,
                              Model model) {
         itemService.borrowItem(auth, id);
         return "redirect:/item";
     }
 
-    @PostMapping("/item/return/{id}")
-    public String returnItem(@PathVariable(name = "id") UUID id, Authentication auth,
+    @PostMapping("/item/{id}/return")
+    public String returnItemById(@PathVariable(name = "id") UUID id, Authentication auth,
                              Model model) {
         itemService.returnItem(auth, id);
         return "redirect:/item";
     }
 
+    @GetMapping("/item/{id}/borrowers")
+    public String getBorrowersPageById(@PathVariable(name = "id") UUID id, Model model) {
+        model.addAttribute("borrowers", itemService.getBorrowers(id));
+        model.addAttribute("item", itemService.getItemDtoById(id));
+        return "borrower";  // return item.html
+    }
 }
