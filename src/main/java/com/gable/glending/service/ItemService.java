@@ -29,13 +29,20 @@ public class ItemService {
     private MemberRepository memberRepository;
 
     //   ----> we are mapping DAO → DTO
-    public List<ItemDto> getItems() {
+    public List<ItemDto> getItems(Authentication auth) {
         List<Item> items = itemRepository.findAll();
 
         List<ItemDto> dtos = items
                 .stream()
                 .map(item -> modelMapper.map(item, ItemDto.class))
                 .collect(Collectors.toList());
+
+        Member member = memberRepository.findByUsername(auth.getName());
+        for(ItemDto dto : dtos) {
+            if (dto.getBorrowers().contains(member)) {
+                dto.setBorrowedByMember(true);
+            }
+        }
 
         return dtos;
     }

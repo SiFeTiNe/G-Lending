@@ -24,8 +24,8 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("/item")
-    public String getItemPage(Model model) {
-        model.addAttribute("items", itemService.getItems());
+    public String getItemPage(Authentication auth, Model model) {
+        model.addAttribute("items", itemService.getItems(auth));
         return "item";  // return item.html
     }
 

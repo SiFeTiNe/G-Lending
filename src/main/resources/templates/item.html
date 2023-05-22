@@ -30,16 +30,20 @@
       <div sec:authorize="hasRole('ROLE_ADMIN')">
         <td><button type="submit" class="btn btn-primary">Borrowers</button></td>
       </div>
-      <td>
-        <form th:action="@{|/item/borrow/${item.id}|}" method="POST">
-          <button type="submit" class="btn btn-success">Borrow</button>
-        </form>
-      </td>
-      <td>
-        <form th:action="@{|/item/return/${item.id}|}" method="POST">
-          <button type="submit" class="btn btn-danger">Return</button>
-        </form>
-      </td>
+      <div th:if="${!item.isBorrowedByMember}">
+        <td>
+          <form th:action="@{|/item/borrow/${item.id}|}" method="POST">
+            <button type="submit" class="btn btn-success">Borrow</button>
+          </form>
+        </td>
+      </div>
+      <div th:if="${item.isBorrowedByMember}">
+        <td>
+          <form th:action="@{|/item/return/${item.id}|}" method="POST">
+            <button type="submit" class="btn btn-danger">Return</button>
+          </form>
+        </td>
+      </div>
     </tr>
     </tbody>
   </table>
